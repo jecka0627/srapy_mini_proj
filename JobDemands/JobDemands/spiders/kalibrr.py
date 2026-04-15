@@ -48,14 +48,14 @@ class KalibrrSpider(scrapy.Spider):
         item["employment_type"] = job.get("tenure")
         item["category"] = job.get("function")
         item["job_category"] = classify_job(item["title"])
-        item["office_address"] = self.build_full_address(location)
+        item["office_address"] = self.full_address(location)
         item["industry"] = company.get("industry") or company_info.get("industry")
-        item["vacancy"] = self.extract_vacancy(job)
+        item["vacancy"] = self.vacancy(job)
         item["company_site"] = company_info.get("url")
 
         return item
 
-    def build_full_address(self, location):
+    def full_address(self, location):
         parts = [
             location.get("address_line_1"),
             location.get("city"),
@@ -64,7 +64,7 @@ class KalibrrSpider(scrapy.Spider):
         ]
         return ", ".join(part for part in parts if part) or None
 
-    def extract_vacancy(self, job):
+    def vacancy(self, job):
         openings = job.get("number_of_openings")
         if openings is not None:
             return f"{openings} opening{'s' if openings != 1 else ''}"
