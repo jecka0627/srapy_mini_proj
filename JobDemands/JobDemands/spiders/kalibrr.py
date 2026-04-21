@@ -9,11 +9,11 @@ def classify_job(title: str) -> str:
     title = title.lower()
 
     it_keywords = [
-        "developer", "engineer", "programmer", "software",
-        "data", "it", "cyber", "security", "network",
-        "full stack", "frontend", "backend", "web",
-        "python", "java", "sql", "cloud", "devops",
-        "mobile", "android", "ios"
+        "developer", "ui/ux", "programmer", "software", "support", "engineer"
+        "data", "it", "cyber", "security", "network", "qa", "graphic"
+        "full stack", "frontend", "backend", "web", "designer",
+        "python", "java", "sql", "cloud", "devops", "system",
+        "mobile", "android", "ios", "analyst", "machine learning"
     ]
 
     return "IT" if any(word in title for word in it_keywords) else "NON-IT"
@@ -67,5 +67,5 @@ class KalibrrSpider(scrapy.Spider):
     def vacancy(self, job):
         openings = job.get("number_of_openings")
         if openings is not None:
-            return f"{openings} opening{'s' if openings != 1 else ''}"
+            return openings
         return None
